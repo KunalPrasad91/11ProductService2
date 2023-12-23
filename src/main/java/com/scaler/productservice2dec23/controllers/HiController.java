@@ -24,8 +24,8 @@ public class HiController {
         for (int i = 0; i < times ; i++)
         {
             greetMsg += "Wassup " + user;
-            //greetMsg +="<br>";
-            greetMsg +="\n";
+            //greetMsg +="<br>";   // works for google chrome new line
+            greetMsg +="\n";       // works for Postman new line
         }
 
         return greetMsg;
