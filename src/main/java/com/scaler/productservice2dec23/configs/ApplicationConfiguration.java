@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 public class ApplicationConfiguration {
 
     // RestTemplate class helps to connect to Third Party API
+    // Hey Spring please create object of RestTemplate and inject wherever required.
     @Bean
   public RestTemplate createRestTemplate()
   {

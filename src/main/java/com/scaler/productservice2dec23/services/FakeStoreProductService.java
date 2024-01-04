@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class FakeStoreProductService implements ProductService{
 
@@ -42,5 +45,36 @@ public class FakeStoreProductService implements ProductService{
         );
 
         return convertFakeStoreProductDtotoProduct(productDto);
+    }
+
+    @Override
+    public List<Product> getAllProduct() {
+
+        List<Product> answer = new ArrayList<>();
+
+        // List<T>, T is earsed at runtime, by Java Generics Type Erasure
+        // so at runtime how to convert url https://fakestoreapi.com/products
+        // to List<?> of what type is not known so gives a error
+
+        /*
+        List<FakeStoreProductDto> fakeStoreProductDtos = restTemplate.getForObject(
+                "https://fakestoreapi.com/products",
+                List<FakeStoreProductDto.class>.class
+        );
+        */
+
+        // Solution is create array of Fakeproduct instead.
+
+        FakeStoreProductDto[] response = restTemplate.getForObject(
+                "https://fakestoreapi.com/products",
+                FakeStoreProductDto[].class
+        );
+
+        for(FakeStoreProductDto dto : response)
+        {
+           answer.add(convertFakeStoreProductDtotoProduct(dto));
+        }
+
+        return answer;
     }
 }
