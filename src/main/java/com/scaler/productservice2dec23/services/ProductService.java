@@ -7,4 +7,5 @@ import java.util.List;
 public interface ProductService {
     public Product getSingleProduct(Long product_id);
     public List<Product> getAllProduct();
+    public Product updateProduct(Long product_id, Product product);
 }

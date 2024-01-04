@@ -4,7 +4,10 @@ import com.scaler.productservice2dec23.dtos.FakeStoreProductDto;
 import com.scaler.productservice2dec23.models.Category;
 import com.scaler.productservice2dec23.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpMessageConverterExtractor;
+import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -76,5 +79,23 @@ public class FakeStoreProductService implements ProductService{
         }
 
         return answer;
+    }
+
+    @Override
+    public Product updateProduct(Long product_id, Product product) {
+
+        FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
+        fakeStoreProductDto.setTitle(product.getTitle());
+        fakeStoreProductDto.setPrice(product.getPrice());
+        fakeStoreProductDto.setDescription(product.getDescription());
+        fakeStoreProductDto.setImage(product.getImageUrl());
+        //fakeStoreProductDto.setCategory(product.getCategory().getName());
+
+        RequestCallback requestCallback = restTemplate.httpEntityCallback(fakeStoreProductDto, FakeStoreProductDto.class);
+        HttpMessageConverterExtractor<FakeStoreProductDto> responseExtractor =
+                new HttpMessageConverterExtractor<>(FakeStoreProductDto.class, restTemplate.getMessageConverters());
+        FakeStoreProductDto response = restTemplate.execute("https://fakestoreapi.com/products/" + product_id, HttpMethod.PUT, requestCallback, responseExtractor);
+
+        return convertFakeStoreProductDtotoProduct(response);
     }
 }
