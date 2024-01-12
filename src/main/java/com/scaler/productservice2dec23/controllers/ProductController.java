@@ -6,6 +6,7 @@ import com.scaler.productservice2dec23.models.Product;
 import com.scaler.productservice2dec23.services.FakeStoreProductService;
 import com.scaler.productservice2dec23.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +21,9 @@ public class ProductController {
     ProductService productService;
 
     @Autowired
-    ProductController(FakeStoreProductService fakeStoreProductService)
+    ProductController(@Qualifier("selfproductservice") ProductService productService)
     {
-        this.productService = fakeStoreProductService;
+        this.productService = productService;
     }
 
     /*
