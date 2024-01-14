@@ -21,7 +21,8 @@ public class ProductController {
     ProductService productService;
 
     @Autowired
-    ProductController(@Qualifier("selfproductservice") ProductService productService)
+    //ProductController(@Qualifier("fakeProductService") ProductService productService)
+   ProductController(@Qualifier("selfproductservice") ProductService productService)
     {
         this.productService = productService;
     }
@@ -79,15 +80,15 @@ public class ProductController {
 */
 
 
-    // working example getSingleProduct phase 4
+/*    // working example getSingleProduct phase 4
     @GetMapping("/{id}")
     public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long product_id) throws ProductNotFoundException {
         // ResponseEntity helps to send more data apart from response body
         //throw new RuntimeException("from controller layer");
-    /*    try {*/
+    *//*    try {*//*
             return new ResponseEntity<>(productService.getSingleProduct(product_id),
                     HttpStatus.OK);
-       /* } catch (ArithmeticException e)
+       *//* } catch (ArithmeticException e)
         {
             ResponseEntity response = new ResponseEntity(HttpStatus.NOT_FOUND);
             return  response;
@@ -95,7 +96,31 @@ public class ProductController {
         {
             ResponseEntity response = new ResponseEntity(HttpStatus.FORBIDDEN);
             return  response;
-        }*/
+        }*//*
+    }*/
+
+
+        // working example getSingleProduct phase 4
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getSingleProduct(@PathVariable("id") Long product_id) throws ProductNotFoundException {
+        // ResponseEntity helps to send more data apart from response body
+        //throw new RuntimeException("from controller layer");
+        try {
+            return new ResponseEntity<>(productService.getSingleProduct(product_id),
+                    HttpStatus.OK);
+        } catch (ArithmeticException e)
+        {
+            ResponseEntity response = new ResponseEntity(HttpStatus.NOT_FOUND);
+            return  response;
+        } catch(RuntimeException e)
+        {
+            ResponseEntity response = new ResponseEntity(HttpStatus.FORBIDDEN);
+            return  response;
+        }catch (ProductNotFoundException e)
+        {
+            ResponseEntity response = new ResponseEntity(HttpStatus.NOT_FOUND);
+            return  response;
+        }
     }
 
 
