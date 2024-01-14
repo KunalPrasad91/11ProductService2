@@ -130,23 +130,25 @@ public class ProductController {
         return  productService.getAllProduct();
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public Product updateProduct(@PathVariable Long id,
-                                 @RequestBody Product product)
-    {
+                                 @RequestBody Product product) throws ProductNotFoundException {
         return productService.updateProduct(id,product);
     }
 
-    @PatchMapping("/{id}")
-    public Product patchProduct(@PathVariable("id") Long id, @RequestBody Product product) {
+    @PutMapping("/{id}")
+    public Product replace(@PathVariable("id") Long id, @RequestBody Product product) {
         return new Product();
     }
 
     @PostMapping()
     public Product addNewProduct(@RequestBody  Product product)
     {
-        Product p = new Product();
-        return  p;
+      /*  Product p = new Product();
+        return  p;*/
+
+        return  productService.addNewProduct(product);
+
     }
 
    /* @DeleteMapping("/{id}")
@@ -158,6 +160,7 @@ public class ProductController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable("id") Long id)
     {
-        return new ResponseEntity<>(HttpStatus.OK);
+        productService.deleteProduct(id);
+       return new ResponseEntity<>(HttpStatus.OK);
     }
 }
