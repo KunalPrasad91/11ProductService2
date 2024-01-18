@@ -17,4 +17,5 @@ public class Product extends BaseModel{
    private String description;
    @ManyToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE}, fetch = FetchType.LAZY)
    private Category category;
+   private int noofsales;
 }
