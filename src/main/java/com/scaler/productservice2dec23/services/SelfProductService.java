@@ -6,6 +6,7 @@ import com.scaler.productservice2dec23.models.Product;
 import com.scaler.productservice2dec23.repositories.CatergoryRepository;
 import com.scaler.productservice2dec23.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 //@Service
 @Service("selfproductservice")
-//@Primary
+@Primary
 public class SelfProductService implements ProductService{
     ProductRepository productRepository;
     CatergoryRepository catergoryRepository;

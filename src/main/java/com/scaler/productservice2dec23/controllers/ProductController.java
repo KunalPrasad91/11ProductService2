@@ -127,7 +127,17 @@ public class ProductController {
     @GetMapping()
     public List<Product> getAllProduct()
     {
-        return  productService.getAllProduct();
+        List<Product> products = productService.getAllProduct();
+        List<Product> finalproducts = new ArrayList<>();
+
+         for(int i = 0; i < products.size() ; i++)
+         {
+            // products.get(i).setTitle("Hello " +products.get(i).getTitle());
+             finalproducts.add(products.get(i));
+         }
+
+        return  finalproducts;
+        //return  productService.getAllProduct();
     }
 
     @PatchMapping("/{id}")
