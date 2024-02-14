@@ -1,6 +1,9 @@
 package com.scaler.productservice2dec23.controllers;
 
 
+import com.scaler.productservice2dec23.commons.AuthenticationCommon;
+import com.scaler.productservice2dec23.dtos.Role;
+import com.scaler.productservice2dec23.dtos.UserDto;
 import com.scaler.productservice2dec23.exceptions.ProductNotFoundException;
 import com.scaler.productservice2dec23.models.Product;
 import com.scaler.productservice2dec23.services.FakeStoreProductService;
@@ -19,12 +22,15 @@ import java.util.List;
 public class ProductController {
 
     ProductService productService;
+    AuthenticationCommon authenticationCommon;
 
     @Autowired
     //ProductController(@Qualifier("fakeProductService") ProductService productService)
-   ProductController(@Qualifier("selfproductservice") ProductService productService)
+   ProductController(@Qualifier("selfproductservice") ProductService productService,
+                     AuthenticationCommon authenticationCommon)
     {
         this.productService = productService;
+        this.authenticationCommon = authenticationCommon;
     }
 
     /*
@@ -123,8 +129,42 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/ProductWithTokenAuth")
+    public ResponseEntity<List<Product>> getAllProductWithTokenAuth(@RequestHeader("AuthenticationToken") String token)
+    {
+        UserDto userDto = authenticationCommon.validateToken(token);
 
-    @GetMapping()
+        if(userDto == null)
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+
+        boolean isAdmim = false;
+        for(Role role : userDto.getRoles())
+        {
+            if(role.getName().equals("Admin")) {
+                isAdmim = true;
+                break;
+            }
+        }
+
+        if(!isAdmim)
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+        List<Product> products = productService.getAllProduct();
+        List<Product> finalproducts = new ArrayList<>();
+
+        for(int i = 0; i < products.size() ; i++)
+        {
+            // products.get(i).setTitle("Hello " +products.get(i).getTitle());
+            finalproducts.add(products.get(i));
+        }
+
+        return  new ResponseEntity<>(finalproducts, HttpStatus.OK);
+        //return  productService.getAllProduct();
+    }
+
+
+
+  /*  @GetMapping()
     public List<Product> getAllProduct()
     {
         List<Product> products = productService.getAllProduct();
@@ -138,6 +178,24 @@ public class ProductController {
 
         return  finalproducts;
         //return  productService.getAllProduct();
+    }*/
+
+    @GetMapping() // localhost:8080/products
+    public ResponseEntity<List<Product>> getAllProducts() {
+
+        List<Product> products = productService.getAllProduct(); // o p q
+
+        List<Product> finalProducts = new ArrayList<>();
+
+        for (Product p: products) { // o  p q
+            p.setTitle("Hello" + p.getTitle());
+            finalProducts.add(p);
+        }
+
+        ResponseEntity<List<Product>> response = new ResponseEntity<>(
+                finalProducts, HttpStatus.OK
+        );
+        return response;
     }
 
     @PatchMapping("/{id}")
