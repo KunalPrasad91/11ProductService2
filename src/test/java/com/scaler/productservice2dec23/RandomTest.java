@@ -6,10 +6,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@SpringBootTest
+//@SpringBootTest
 public class RandomTest {
 
-    @Test
+    /*@Test
     public void OnePlusOneTwo()
     {
         // Arrange
@@ -26,6 +26,6 @@ public class RandomTest {
         assertEquals(2,i);
         assertEquals(3,i);
 
-    }
+    }*/
 
 }

@@ -8,6 +8,9 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
+/*
+https://github.com/Naman-Bhalla/productservicedecmwfeve/blob/master/src/main/java/com/scaler/productservicedecmwfeve/security/SpringSecurityConfig.java
+ */
 
 @Configuration
 public class SpringSecurityConfig {

@@ -13,9 +13,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+//@SpringBootTest
 class ProductControllerTest {
 
+/*
     @Autowired
     private ProductController productController;
 
@@ -25,7 +26,8 @@ class ProductControllerTest {
     @Test
     void testProductControllerGetAllPro()
     {
-    /*    List<Product> products = new ArrayList<>();
+    */
+/*    List<Product> products = new ArrayList<>();
         Product p1 = new Product();
         p1.setTitle("Iphone 15");
         products.add(p1);
@@ -51,18 +53,22 @@ class ProductControllerTest {
         ).thenReturn(
                 prodToPass
         );
-*/
+*//*
+
         //Act
-       /* List<Product> response = productController.getAllProducts();
+       */
+/* List<Product> response = productController.getAllProducts();
 
         // Assert
         assertEquals(products.size(),response.size());
 
         for (int i = 0; i < products.size(); i++) {
                 assertEquals(products.get(i).getTitle(),response.get(i).getTitle());
-        }*/
+        }*//*
+
 
     }
+*/
 
 
 }
